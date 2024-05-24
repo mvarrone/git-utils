@@ -1,12 +1,11 @@
 ## Script
 
-- [**git_push.py**](https://github.com/mvarrone/github-utils/blob/master/git_push.py)
+- [**git_push.py**](https://github.com/mvarrone/git-utils/blob/master/git_push.py)
     
     ### Main idea 
     It automates the process of pushing all of the changes to GitHub/GitLab via Git. 
 
     ### Process to be automated
-
     This process normally involves the following steps:
 
     a) **Adding files to the staging area:** *git add .*
@@ -26,7 +25,6 @@
     - subprocess.CalledProcessError: Deals with problems encountered during `subprocess.check_call()` execution. Related to problems that might occur when executing `git` commands.
     
     **Notes:** 
-    
     - The script prompts for a commit message as a mandatory step.
     - It also prompts for a branch name which is a non-mandatory step: In case there is no input for it, Python will assume **branch_name_by_default** variable value, defined in code, as the branch name to be used.
 
@@ -37,7 +35,6 @@ py .\git_push.py
 Then, you will be asked to enter a commit message and a branch name. If you do not provide a branch name, the script will select "master" as the desired one
 
 # Example output
-
 Your execution should be outputting similiar as follows:
 
 ![alt text](success_output.png)
