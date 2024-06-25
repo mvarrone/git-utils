@@ -189,6 +189,8 @@ def main() -> None:
         print(f"{AnsiColor.RED}{Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
 
         # Log the keyboard interrupt and failure
+        commit_message = "N/A"
+        branch_name = "N/A"
         log_entry = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Commit message: {commit_message}, Branch name: {branch_name}, Result: FAIL, Error: {Messages.FAILURE_KEYBOARD_INTERRUPT}"
         logging.error(log_entry)
 
