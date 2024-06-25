@@ -2,3 +2,5 @@
 2024-06-25 01:44:38 - Commit message: no changes, just testing , Branch name: master, Result: OK
 2024-06-25 01:48:59 - Commit message: N/A, Branch name: N/A, Result: FAIL, Error: YOU PRESSED CTRL+C TO END SCRIPT EXECUTION
 2024-06-25 01:49:11 - Commit message: N/A, Branch name: N/A, Result: FAIL, Error: YOU PRESSED CTRL+C TO END SCRIPT EXECUTION
+2024-06-25 01:49:49 - Commit message: test 2, Branch name: master, Result: OK
+2024-06-25 01:50:10 - Commit message: N/A, Branch name: N/A, Result: FAIL, Error: YOU PRESSED CTRL+C TO END SCRIPT EXECUTION

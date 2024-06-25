@@ -107,7 +107,9 @@ def get_branch_name(default_branch_name: str) -> str:
         return default_branch_name
 
 
-def run_git_command(command: list[str], command_name: str) -> str:
+def run_git_command(
+    command: list[str], command_name: str, commit_message: str, branch_name: str
+) -> str:
     """Run a git command and return the output.
 
     Args:
@@ -167,17 +169,17 @@ def main() -> None:
 
         # Step 1: Add all of the files to the staging area
         git_add_command = ["git", "add", "."]
-        run_git_command(git_add_command, "git add")
+        run_git_command(git_add_command, "git add", commit_message, branch_name)
         print(f"{AnsiColor.GREEN}{Messages.SUCCESS_FILES_STAGED}{AnsiColor.RESET}")
 
         # Step 2: Commit the changes with the specified message
         git_commit_command = ["git", "commit", "-m", commit_message]
-        run_git_command(git_commit_command, "git commit")
+        run_git_command(git_commit_command, "git commit", commit_message, branch_name)
         print(f"{AnsiColor.GREEN}{Messages.SUCCESS_COMMIT_CREATED}{AnsiColor.RESET}")
 
         # Step 3: Push the changes to the remote repository
         git_push_command = ["git", "push", "-u", "origin", branch_name]
-        run_git_command(git_push_command, "git push")
+        run_git_command(git_push_command, "git push", commit_message, branch_name)
 
         # Log the success of the push operation
         log_entry = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Commit message: {commit_message}, Branch name: {branch_name}, Result: OK"
