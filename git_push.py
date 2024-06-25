@@ -143,7 +143,8 @@ def run_git_command(
         print(f"{AnsiColor.RED}{Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
 
         # Log the error and the failure
-        log_entry = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Commit message: {commit_message}, Branch name: {branch_name}, Result: FAIL, Error: {error_message}"
+        date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"{date_and_time} | Commit message: {commit_message} | Branch name: {branch_name} | Result: FAIL | Error: {error_message}"
         logging.error(log_entry)
 
         sys.exit(1)
@@ -154,15 +155,15 @@ def main() -> None:
 
     if not is_git_installed():
         print(f"{AnsiColor.RED}{Messages.ERROR_GIT_NOT_INSTALLED}{AnsiColor.RESET}")
-        logging.error(
-            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {Messages.ERROR_GIT_NOT_INSTALLED}"
-        )
+        date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        logging.error(f"{date_and_time} | {Messages.ERROR_GIT_NOT_INSTALLED}")
         sys.exit(1)
 
     default_branch_name = "master"
 
     try:
         commit_message: str = get_commit_message()
+        print(commit_message)
         branch_name: str = get_branch_name(default_branch_name)
 
         print(f"{AnsiColor.YELLOW}{Messages.INFORMATION_TEXT}{AnsiColor.RESET}")
@@ -182,7 +183,8 @@ def main() -> None:
         run_git_command(git_push_command, "git push", commit_message, branch_name)
 
         # Log the success of the push operation
-        log_entry = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Commit message: {commit_message}, Branch name: {branch_name}, Result: OK"
+        date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"{date_and_time} | Commit message: {commit_message} | Branch name: {branch_name} | Result: OK"
         logging.info(log_entry)
     except KeyboardInterrupt:
         print(
@@ -191,9 +193,18 @@ def main() -> None:
         print(f"{AnsiColor.RED}{Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
 
         # Log the keyboard interrupt and failure
-        commit_message = "N/A"
-        branch_name = "N/A"
-        log_entry = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Commit message: {commit_message}, Branch name: {branch_name}, Result: FAIL, Error: {Messages.FAILURE_KEYBOARD_INTERRUPT}"
+        try:
+            commit_message = commit_message
+        except Exception:
+            commit_message = "N/A"
+
+        try:
+            branch_name = branch_name
+        except Exception:
+            branch_name = "N/A"
+
+        date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"{date_and_time} - Commit message: {commit_message} | Branch name: {branch_name} | Result: FAIL | Error: {Messages.FAILURE_KEYBOARD_INTERRUPT}"
         logging.error(log_entry)
 
         sys.exit(1)
