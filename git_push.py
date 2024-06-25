@@ -1,5 +1,13 @@
 import sys
 import subprocess
+import logging
+from datetime import datetime
+
+# Configure logging
+log_filename = datetime.now().strftime("git_script_log_%Y-%m-%d_%H-%M-%S.txt")
+logging.basicConfig(
+    filename=log_filename, level=logging.INFO, format="%(asctime)s - %(message)s"
+)
 
 
 # Define constants for ANSI escape sequences for colors
@@ -133,6 +141,11 @@ def run_git_command(command: list[str], command_name: str) -> str:
         error_message = e.output.strip()
         print(f"{AnsiColor.RED}{Messages.ERROR_TEXT}{error_message}{AnsiColor.RESET}")
         print(f"{AnsiColor.RED}{Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
+
+        # Log the error and the failure
+        logging.error(f"{Messages.ERROR_TEXT}{error_message}")
+        logging.error("CHANGES PUSHED: FAIL")
+
         sys.exit(1)
 
 
@@ -141,6 +154,7 @@ def main() -> None:
 
     if not is_git_installed():
         print(f"{AnsiColor.RED}{Messages.ERROR_GIT_NOT_INSTALLED}{AnsiColor.RESET}")
+        logging.error(Messages.ERROR_GIT_NOT_INSTALLED)
         sys.exit(1)
 
     default_branch_name = "master"
@@ -148,6 +162,10 @@ def main() -> None:
     try:
         commit_message: str = get_commit_message()
         branch_name: str = get_branch_name(default_branch_name)
+
+        # Log the commit message and branch name
+        logging.info(f"Commit message: {commit_message}")
+        logging.info(f"Branch name: {branch_name}")
 
         print(f"{AnsiColor.YELLOW}{Messages.INFORMATION_TEXT}{AnsiColor.RESET}")
 
@@ -164,11 +182,19 @@ def main() -> None:
         # Step 3: Push the changes to the remote repository
         git_push_command = ["git", "push", "-u", "origin", branch_name]
         run_git_command(git_push_command, "git push")
+
+        # Log the success of the push operation
+        logging.info("CHANGES PUSHED: OK")
     except KeyboardInterrupt:
         print(
             f"{AnsiColor.RED}\n{Messages.FAILURE_KEYBOARD_INTERRUPT}{AnsiColor.RESET}"
         )
         print(f"{AnsiColor.RED}{Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
+
+        # Log the keyboard interrupt and failure
+        logging.error(Messages.FAILURE_KEYBOARD_INTERRUPT)
+        logging.error("CHANGES PUSHED: FAIL")
+
         sys.exit(1)
 
     print(f"{AnsiColor.GREEN}{Messages.SUCCESS_CHANGES_PUSHED}{AnsiColor.RESET}")

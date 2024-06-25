@@ -38,3 +38,7 @@ Then, you will be asked to enter a commit message and a branch name. If you do n
 Your execution should be outputting similiar as follows:
 
 ![alt text](success_output.png)
+
+## Latest improvements
+
+- Added logging support
