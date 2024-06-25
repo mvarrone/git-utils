@@ -144,7 +144,7 @@ def run_git_command(
 
         # Log the error and the failure
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"{date_and_time} | Commit message: {commit_message} | Branch name: {branch_name} | Result: FAIL | Error: {error_message}"
+        log_entry = f"{date_and_time} - Commit message: {commit_message} | Branch name: {branch_name} | Result: FAIL | Error: {error_message}"
         logging.error(log_entry)
 
         sys.exit(1)
@@ -184,7 +184,7 @@ def main() -> None:
 
         # Log the success of the push operation
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"{date_and_time} | Commit message: {commit_message} | Branch name: {branch_name} | Result: OK"
+        log_entry = f"{date_and_time} - Commit message: {commit_message} | Branch name: {branch_name} | Result: OK"
         logging.info(log_entry)
     except KeyboardInterrupt:
         print(
