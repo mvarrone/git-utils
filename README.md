@@ -9,9 +9,7 @@ Normally, this process involves the following steps:
 1. Adding files to the staging area
     
     Command used to add all files to it: *git add .*
-
 2. Commit changes using *git commit -m "some message"*
-
 3. Finally, pushing changes using *git push -u origin master*
 
 ### How it works
@@ -20,7 +18,7 @@ This script requires user to input a commit message and a branch name. Afterward
 
 #### Notes
 
-The script prompts for a commit message as a mandatory step and also prompts for a branch name which is a non-mandatory step: In case there is no input for it, Python will assume the value for the **branch_name_by_default** variable, defined in **, as the branch name to be used. Default value: master
+The script prompts for a commit message as a mandatory step and also prompts for a branch name which is a non-mandatory step: In case there is no input for it, Python will assume the value for the **branch_name_by_default** variable, defined in *git_push.py*, as the branch name to be used. Default value: master
 
 ### Exceptions handled
 
