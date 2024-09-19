@@ -3,11 +3,6 @@ import subprocess
 import logging
 from datetime import datetime
 
-# Configure logging
-log_filename = "logs.txt"
-logging.basicConfig(filename=log_filename,
-                    level=logging.INFO, format="%(message)s")
-
 
 # Define constants for ANSI escape sequences for colors
 class AnsiColor:
@@ -71,7 +66,7 @@ def is_git_installed() -> bool:
         return False
 
 
-def get_commit_message() -> str:
+def set_commit_message() -> str:
     """Prompt the user to enter a commit message.
 
     Returns:
@@ -88,7 +83,7 @@ def get_commit_message() -> str:
             )
 
 
-def get_branch_name(default_branch_name: str) -> str:
+def set_branch_name(default_branch_name: str) -> str:
     """Prompt the user to enter a branch name, or use a default value.
 
     Args:
@@ -101,6 +96,7 @@ def get_branch_name(default_branch_name: str) -> str:
         f"Please, enter the branch name ({
             default_branch_name} if not specified): "
     )
+
     if branch_name:
         return branch_name
     else:
@@ -163,6 +159,11 @@ def run_git_command(
 def main() -> None:
     """Main function to handle user input and run Git commands."""
 
+    # Configure logging
+    log_filename = "logs.txt"
+    logging.basicConfig(filename=log_filename,
+                        level=logging.INFO, format="%(message)s")
+
     if not is_git_installed():
         print(f"{AnsiColor.RED}{
               Messages.ERROR_GIT_NOT_INSTALLED}{AnsiColor.RESET}")
@@ -173,9 +174,8 @@ def main() -> None:
     default_branch_name = "master"
 
     try:
-        commit_message: str = get_commit_message()
-        print(commit_message)
-        branch_name: str = get_branch_name(default_branch_name)
+        commit_message: str = set_commit_message()
+        branch_name: str = set_branch_name(default_branch_name)
 
         print(f"{AnsiColor.YELLOW}{Messages.INFORMATION_TEXT}{AnsiColor.RESET}")
 
