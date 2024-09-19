@@ -31,7 +31,7 @@ class Messages:
 
     # Failures
     FAILURE_CHANGES_NOT_PUSHED = "CHANGES HAVE NOT BEEN PUSHED"
-    FAILURE_KEYBOARD_INTERRUPT = "YOU PRESSED CTRL+C TO END SCRIPT EXECUTION"
+    FAILURE_KEYBOARD_INTERRUPT = "KeyboardInterrupt Exception: YOU PRESSED CTRL+C TO END SCRIPT EXECUTION"
 
     # Information
     INFORMATION_TEXT = "TRYING TO PUSH CHANGES..."
@@ -156,6 +156,7 @@ def run_git_command(
             branch_name} | Result: FAIL | Error: {error_message}"
         logging.error(log_entry)
 
+        # Stop code execution if some error was found when using a git command
         sys.exit(1)
 
 
@@ -176,6 +177,7 @@ def main() -> None:
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logging.error(f"{date_and_time} | {Messages.ERROR_GIT_NOT_INSTALLED}")
 
+        # Stop code execution if git is not installed
         sys.exit(1)
 
     try:
@@ -209,6 +211,7 @@ def main() -> None:
             commit_message} | Branch name: {branch_name} | Result: OK"
         logging.info(log_entry)
     except KeyboardInterrupt:
+        # Display a message for the KeyboardInterrupt exception that has been raised
         print(
             f"{AnsiColor.RED}\n{Messages.FAILURE_KEYBOARD_INTERRUPT}{
                 AnsiColor.RESET}"
@@ -217,7 +220,11 @@ def main() -> None:
         print(f"{AnsiColor.RED}{
               Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
 
-        # Log the keyboard interrupt and failure
+        # Save both commit message and branch name in a safe manner
+        # It may occur that user cancels the script execution and commit_message has not already been set.
+        # So, in that case, in order to avoid later problems, the assigned value for it will be "N/A"
+        # Same process for branch_name
+
         try:
             commit_message = commit_message
         except Exception:
@@ -228,13 +235,16 @@ def main() -> None:
         except Exception:
             branch_name = "N/A"
 
+        # Log the KeyboardInterrupt exception
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_entry = f"{date_and_time} - Commit message: {commit_message} | Branch name: {
             branch_name} | Result: FAIL | Error: {Messages.FAILURE_KEYBOARD_INTERRUPT}"
         logging.error(log_entry)
 
+        # Stop code execution if user cancelled the script execution using Ctrl + C
         sys.exit(1)
     else:
+        # If no exception has been raised, inform that the operation has been completed successfully
         print(f"{AnsiColor.GREEN}{
               Messages.SUCCESS_CHANGES_PUSHED}{AnsiColor.RESET}")
 
