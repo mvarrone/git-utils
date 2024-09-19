@@ -37,7 +37,9 @@ The script will halt its execution under the following conditions:
    - `git push`
 3. The user manually stops the execution by pressing `Ctrl + C`.
 
-If an error occurs, the corresponding error message will be displayed, and it will be appended to a file named `logs.txt` for future reference.
+If an error occurs, the corresponding error message will be displayed and it will be appended to a file named `logs.txt` for future reference.
+
+In case the `logs.txt` file is not present at the same directory level of *git_push.py*, a new one will be created automatically. In fact, it is created once *git_push.py* is executed
  
 ### Running the script
 
