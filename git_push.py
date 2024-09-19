@@ -94,7 +94,7 @@ def set_branch_name(default_branch_name: str) -> str:
         str: The branch name entered by the user, or the default branch name if none is specified.
     """
 
-    branch_name = input(
+    branch_name: str = input(
         f"Please, enter the branch name ({
             default_branch_name} if not specified): "
     )
