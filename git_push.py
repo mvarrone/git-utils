@@ -1,10 +1,10 @@
 import sys
 import subprocess
 import logging
+
 from datetime import datetime
 
 
-# Define constants for ANSI escape sequences for colors
 class AnsiColor:
     """Constants for ANSI escape sequences for colors."""
 
@@ -18,7 +18,6 @@ class AnsiColor:
     RESET = "\033[0m"
 
 
-# Define constants for terminal outputs
 class Messages:
     """Constants for terminal output messages."""
 
