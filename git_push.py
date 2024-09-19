@@ -59,6 +59,7 @@ def is_git_installed() -> bool:
     Returns:
         bool: True if Git is installed and accessible, False otherwise.
     """
+
     try:
         subprocess.check_output(["git", "--version"])
         return True
@@ -72,6 +73,7 @@ def set_commit_message() -> str:
     Returns:
         str: The commit message entered by the user.
     """
+
     while True:
         commit_message = input("Please, enter some message for this commit: ")
         if commit_message:
@@ -92,6 +94,7 @@ def set_branch_name(default_branch_name: str) -> str:
     Returns:
         str: The branch name entered by the user, or the default branch name if none is specified.
     """
+
     branch_name = input(
         f"Please, enter the branch name ({
             default_branch_name} if not specified): "
@@ -119,6 +122,7 @@ def run_git_command(
     Returns:
         str: The output of the executed git command.
     """
+
     try:
         output = subprocess.check_output(
             command, stderr=subprocess.STDOUT, universal_newlines=True
@@ -159,10 +163,13 @@ def run_git_command(
 def main() -> None:
     """Main function to handle user input and run Git commands."""
 
-    # Configure logging
+    # Set logging params
     log_filename = "logs.txt"
     logging.basicConfig(filename=log_filename,
                         level=logging.INFO, format="%(message)s")
+
+    # Set default branch name
+    default_branch_name = "master"
 
     if not is_git_installed():
         print(f"{AnsiColor.RED}{
@@ -170,8 +177,6 @@ def main() -> None:
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logging.error(f"{date_and_time} | {Messages.ERROR_GIT_NOT_INSTALLED}")
         sys.exit(1)
-
-    default_branch_name = "master"
 
     try:
         commit_message: str = set_commit_message()
@@ -198,16 +203,18 @@ def main() -> None:
         run_git_command(git_push_command, "git push",
                         commit_message, branch_name)
 
-        # Log the success of the push operation
+        # Step 4: Log the success of the push operation
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_entry = f"{date_and_time} - Commit message: {
             commit_message} | Branch name: {branch_name} | Result: OK"
         logging.info(log_entry)
+
     except KeyboardInterrupt:
         print(
             f"{AnsiColor.RED}\n{Messages.FAILURE_KEYBOARD_INTERRUPT}{
                 AnsiColor.RESET}"
         )
+
         print(f"{AnsiColor.RED}{
               Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
 
