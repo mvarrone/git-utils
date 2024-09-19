@@ -18,15 +18,16 @@ Normally, this process involves the following steps:
 
 This script requires user to input a commit message and a branch name. Afterward, if everything goes OK, all changes should be automatically pushed.
 
+#### Notes
+
+The script prompts for a commit message as a mandatory step and also prompts for a branch name which is a non-mandatory step: In case there is no input for it, Python will assume the value for the **branch_name_by_default** variable, defined in **, as the branch name to be used. Default value: master
+
+### Exceptions handled
+
 Code is capable of handling exceptions such as:
 
-- KeyboardInterrupt: Stops script execution on Ctrl+C.
-- subprocess.CalledProcessError: Deals with problems encountered during `subprocess.check_call()` execution. Related to problems that might occur when executing `git` commands.
-
-### Notes
-
-- The script prompts for a commit message as a mandatory step.
-- It also prompts for a branch name which is a non-mandatory step: In case there is no input for it, Python will assume **branch_name_by_default** variable value, defined in code, as the branch name to be used. Default value: master
+- KeyboardInterrupt: raised on pressing Ctrl+C
+- subprocess.CalledProcessError: Deals with problems encountered during `subprocess.check_call()` execution. Related to problems that might occur when executing `git` commands
 
 ### Execution interruptions
 
