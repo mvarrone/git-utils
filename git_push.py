@@ -1,6 +1,6 @@
 import sys
-import subprocess
 import logging
+import subprocess
 
 from datetime import datetime
 
@@ -175,6 +175,7 @@ def main() -> None:
               Messages.ERROR_GIT_NOT_INSTALLED}{AnsiColor.RESET}")
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logging.error(f"{date_and_time} | {Messages.ERROR_GIT_NOT_INSTALLED}")
+
         sys.exit(1)
 
     try:
@@ -207,7 +208,6 @@ def main() -> None:
         log_entry = f"{date_and_time} - Commit message: {
             commit_message} | Branch name: {branch_name} | Result: OK"
         logging.info(log_entry)
-
     except KeyboardInterrupt:
         print(
             f"{AnsiColor.RED}\n{Messages.FAILURE_KEYBOARD_INTERRUPT}{
@@ -234,8 +234,9 @@ def main() -> None:
         logging.error(log_entry)
 
         sys.exit(1)
-
-    print(f"{AnsiColor.GREEN}{Messages.SUCCESS_CHANGES_PUSHED}{AnsiColor.RESET}")
+    else:
+        print(f"{AnsiColor.GREEN}{
+              Messages.SUCCESS_CHANGES_PUSHED}{AnsiColor.RESET}")
 
 
 if __name__ == "__main__":
