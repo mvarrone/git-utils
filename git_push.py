@@ -74,7 +74,8 @@ def set_commit_message() -> str:
     """
 
     while True:
-        commit_message = input("Please, enter some message for this commit: ")
+        commit_message: str = input(
+            "Please, enter some message for this commit: ")
         if commit_message:
             return commit_message
         else:
@@ -123,7 +124,7 @@ def run_git_command(
     """
 
     try:
-        output = subprocess.check_output(
+        output: str = subprocess.check_output(
             command, stderr=subprocess.STDOUT, universal_newlines=True
         )
         return output.strip()
@@ -151,8 +152,8 @@ def run_git_command(
               Messages.FAILURE_CHANGES_NOT_PUSHED}{AnsiColor.RESET}")
 
         # Log the error and the failure
-        date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"{date_and_time} - Commit message: {commit_message} | Branch name: {
+        date_and_time: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry: str = f"{date_and_time} - Commit message: {commit_message} | Branch name: {
             branch_name} | Result: FAIL | Error: {error_message}"
         logging.error(log_entry)
 
@@ -174,7 +175,7 @@ def main() -> None:
     if not is_git_installed():
         print(f"{AnsiColor.RED}{
               Messages.ERROR_GIT_NOT_INSTALLED}{AnsiColor.RESET}")
-        date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        date_and_time: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logging.error(f"{date_and_time} | {Messages.ERROR_GIT_NOT_INSTALLED}")
 
         # Stop code execution if git is not installed
@@ -187,27 +188,28 @@ def main() -> None:
         print(f"{AnsiColor.YELLOW}{Messages.INFORMATION_TEXT}{AnsiColor.RESET}")
 
         # Step 1: Add all of the files to the staging area
-        git_add_command = ["git", "add", "."]
+        git_add_command: list[str] = ["git", "add", "."]
         run_git_command(git_add_command, "git add",
                         commit_message, branch_name)
         print(f"{AnsiColor.GREEN}{
               Messages.SUCCESS_FILES_STAGED}{AnsiColor.RESET}")
 
         # Step 2: Commit the changes with the specified message
-        git_commit_command = ["git", "commit", "-m", commit_message]
+        git_commit_command: list[str] = ["git", "commit", "-m", commit_message]
         run_git_command(git_commit_command, "git commit",
                         commit_message, branch_name)
         print(f"{AnsiColor.GREEN}{
               Messages.SUCCESS_COMMIT_CREATED}{AnsiColor.RESET}")
 
         # Step 3: Push the changes to the remote repository
-        git_push_command = ["git", "push", "-u", "origin", branch_name]
+        git_push_command: list[str] = [
+            "git", "push", "-u", "origin", branch_name]
         run_git_command(git_push_command, "git push",
                         commit_message, branch_name)
 
         # Step 4: Log the success of the push operation
         date_and_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"{date_and_time} - Commit message: {
+        log_entry: str = f"{date_and_time} - Commit message: {
             commit_message} | Branch name: {branch_name} | Result: OK"
         logging.info(log_entry)
     except KeyboardInterrupt:
